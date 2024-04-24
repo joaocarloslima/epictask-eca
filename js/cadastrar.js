@@ -10,9 +10,16 @@ document.querySelector("#botao-cadastrar").addEventListener("click", () => {
 
     validar(tarefa)
 
-    console.log(tarefa)
+    salvar(tarefa)
 
 })
+
+function salvar (tarefa) {
+    const tarefas = JSON.parse( localStorage.getItem("tarefas") ) || []
+    tarefas.push(tarefa)
+    localStorage.setItem("tarefas", JSON.stringify(tarefas))
+    window.location.href = "index.html"
+}
 
 function validar(tarefa){
     limparErros()
@@ -34,11 +41,15 @@ function validar(tarefa){
 }
 
 function limparErros(){
-    // TODO percorrer o array
-    document
-        .querySelectorAll("input .is-error, textarea .is-error")
-        .classList
-        .remove("is-error")
+    const campos = document
+                .querySelectorAll("input.is-error, textarea.is-error")
+
+    campos
+        .forEach(input => input.classList.remove("is-error") )
+
+    document.querySelectorAll(".nes-field span")
+            .forEach( span => span.innerText = "")
 
     
 }
+
